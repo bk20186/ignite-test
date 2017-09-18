@@ -12,7 +12,7 @@ public class SecondJob extends ComputeJobAdapter {
     @Override
     public CustomClass execute() throws IgniteException {
         try {
-            System.out.println("second job " + customClass.getCustomSubClass(customClass.getClazzName()).getName());
+            System.out.println("second job " + Class.forName("CustomSubClass").newInstance().toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

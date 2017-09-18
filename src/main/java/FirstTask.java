@@ -25,11 +25,8 @@ public class FirstTask extends ComputeTaskSplitAdapter<String, Boolean> {
     @Nullable
     @Override
     public Boolean reduce(List<ComputeJobResult> results) throws IgniteException {
-        ClusterGroup dataNodes = ignite.cluster().forPredicate(node ->
-                Optional.ofNullable(node.<Set<String>>attribute("roles"))
-                        .map(roles -> roles.contains("data-node"))
-                        .orElse(false));
-        results.forEach(result-> ignite.compute(dataNodes).execute(new SecondTask(result.getData()), "second task"));
+
+//        results.forEach(result-> );
         return true;
     }
 }
