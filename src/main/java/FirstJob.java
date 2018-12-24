@@ -24,7 +24,7 @@ public class FirstJob extends ComputeJobAdapter {
                             .map(roles -> roles.contains("data-node"))
                             .orElse(false));
             System.out.println("first job " + customClass.getCustomSubClass(customClass.getClazzName()).getName());
-            ignite.compute(dataNodes).execute(new SecondTask(customClass), "second task");
+            ignite.compute(ignite.cluster().forLocal()).execute(new SecondTask(customClass), "second task");
         }catch (Exception e){
             e.printStackTrace();
         }

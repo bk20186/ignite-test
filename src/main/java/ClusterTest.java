@@ -12,7 +12,8 @@ public class ClusterTest {
                 Optional.ofNullable(node.<Set<String>>attribute("roles"))
                         .map(roles -> roles.contains("data-node"))
                         .orElse(false));
-        ignite.compute(dataNodes).execute(new FirstTask(), "first task");
+        ignite.compute(ignite.cluster().forLocal()).execute(FirstTask.class.getName(), "first task");
+        ignite.compute(ignite.cluster().forLocal()).execute(FirstTask.class.getName(), "first task");
         ignite.close();
     }
 }
