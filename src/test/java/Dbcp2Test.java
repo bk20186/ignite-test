@@ -1,6 +1,7 @@
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import com.zaxxer.hikari.metrics.dropwizard.CodahaleHealthChecker;
 import org.apache.commons.dbcp2.*;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
@@ -17,8 +18,6 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Dbcp2Test {
 
@@ -42,6 +41,11 @@ public class Dbcp2Test {
         cfg.setMaxTotal(100);
         cfg.setMaxIdle(20);
         cfg.setMinIdle(10);
+//        cfg.setJmxEnabled(true);
+//        cfg.setJmxNameBase("dbcp2pool");
+        cfg.setMinEvictableIdleTimeMillis(1000);
+        cfg.setTimeBetweenEvictionRunsMillis(1000);
+//        cfg.setMaxWaitMillis(10*1000);
 
         pool = new GenericObjectPool<>(poolableConnectionFactory,cfg);
         poolableConnectionFactory.setPool(pool);
@@ -79,6 +83,7 @@ public class Dbcp2Test {
 
         }
         sw.stop();
+        Thread.sleep(10000);
         System.out.println(sw.prettyPrint());
         System.out.println("########### Result #############");
         System.out.println("active - " + pool.getNumActive());
