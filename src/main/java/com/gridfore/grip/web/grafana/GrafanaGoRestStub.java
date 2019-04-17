@@ -126,6 +126,13 @@ public class GrafanaGoRestStub {
         return "success";
     }
 
+    @RequestMapping(value = "/scenario/{scenarioId:.+}/interval/{intervalId:.+}/operation/{operationId:.+}/cancel", method = RequestMethod.POST)
+    public String cancelOperation(final @PathVariable("scenarioId") String scenarioId,
+                                             final @PathVariable("operationId") String operationId,
+                                             final @PathVariable("intervalId") Long intervalId) {
+        return "success";
+    }
+
     @RequestMapping(value = "/interval/{intervalId:.+}", method = RequestMethod.GET)
     public List getOperationIntervals(final @PathVariable("intervalId") Long intervalId) {
         return gson.fromJson("[ {\n" +
